@@ -83,7 +83,7 @@ class Triangle(Shape):
         except:
             print("Could not instantiate Triangle")
 
-        # Remove height and width attributes which make no sense for a line
+        # Remove height and width attributes which make no sense for a triangle
         del self.height
         del self.width
 
