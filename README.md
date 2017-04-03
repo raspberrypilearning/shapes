@@ -1,8 +1,11 @@
 # Shapes
 
-You can download and run the file and it will run a demo program
+You can download and run the file and it will run a demo program. 
+
+Alternatively, create a new Python file in the same folder as **shapes.py** and use it like this:
 
 ```python
+from shapes import Paper, Triangle, Rectangle, Oval
 # You need to create a Paper object to draw your shapes on
 paper = Paper()
 
