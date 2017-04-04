@@ -21,11 +21,13 @@ class Paper(Tk):
 
 class Shape():
 
-    def __init__(self, paper, width=50, height=50, x=None, y=None, color="black"):
+    paper = Paper(400,400)
+
+    def __init__(self, width=50, height=50, x=None, y=None, color="black"):
         self.height = height
         self.width = width
         self.color = color
-        self.paper = paper
+        #self.paper = paper
         # Put it in the centre if no coords were given
         if x is None:
             self.x = (self.paper.paper_width/2) - (self.width/2)
@@ -76,10 +78,10 @@ class Oval(Shape):
 
 class Triangle(Shape):
 
-    def __init__(self, paper, x1=0, y1=0, x2=20, y2=0, x3=20, y3=20, color="black"):
+    def __init__(self, x1=0, y1=0, x2=20, y2=0, x3=20, y3=20, color="black"):
 
         try:
-            super().__init__(paper, color=color)
+            super().__init__(color=color)
         except:
             print("Could not instantiate Triangle")
 
@@ -118,17 +120,15 @@ class Triangle(Shape):
 # If you run this file it will auto do this demo script
 if __name__ == "__main__":
 
-    paper = Paper()
-
     # Random size and location triangle
-    tri = Triangle(paper)
+    tri = Triangle()
     tri.randomise()
     tri.draw()
 
     # Specific size and location rectangle
-    rect = Rectangle(paper, height=40, width=90, x=110, y=20, color="yellow")
+    rect = Rectangle(height=40, width=90, x=110, y=20, color="yellow")
     rect.draw()
 
     # Default oval
-    oval = Oval(paper)
+    oval = Oval()
     oval.draw()
