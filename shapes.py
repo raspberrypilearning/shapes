@@ -3,7 +3,7 @@ from random import randint, choice
 
 class Paper(Tk):
 
-    def __init__(self, width=400, height=400):
+    def __init__(self, width=600, height=600):
         try:
             super().__init__()
         except:
@@ -21,7 +21,8 @@ class Paper(Tk):
 
 class Shape():
 
-    paper = Paper(400,400)
+    # Static variable removing the need to pass a Paper object
+    paper = Paper()
 
     def __init__(self, width=50, height=50, x=None, y=None, color="black"):
         self.height = height
