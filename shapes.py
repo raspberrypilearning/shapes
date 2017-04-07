@@ -38,8 +38,8 @@ class Shape():
             self.y = (self.paper.paper_height/2) - (self.height/2)
         else:
             self.y = y
-        
 
+    # This is an internal method not meant to be used
     def _location(self):
         x1 = self.x
         y1 = self.y 
@@ -57,6 +57,21 @@ class Shape():
         self.y = randint(0, self.paper.paper_height-self.height)
 
         self.color = choice(["red", "yellow", "blue", "green", "gray", "white", "black", "cyan"])
+
+    def set_width(self, width):
+        self.width = width
+
+    def set_height(self,height):
+        self.height = height
+
+    def set_x(self, x):
+        self.x = x
+
+    def set_y(self, y):
+        self.y = y
+
+    def set_color(self, color):
+        self.color = color
 
 
 class Rectangle(Shape):
@@ -117,6 +132,13 @@ class Triangle(Shape):
 
         self.color = choice(["red", "yellow", "blue", "green", "gray", "white", "black", "cyan"])
 
+    def set_width(self, width):
+        print("Width is not defined for Triangle objects")
+
+    def set_height(self, height):
+        print("Height is not defined for Triangle objects")
+        
+
 
 # If you run this file it will auto do this demo script
 if __name__ == "__main__":
@@ -133,3 +155,12 @@ if __name__ == "__main__":
     # Default oval
     oval = Oval()
     oval.draw()
+
+    # Oval with setters
+    oval2 = Oval()
+    oval2.set_height(200)
+    oval2.set_width(100)
+    oval2.set_color("fuchsia")
+    oval2.set_x(30)
+    oval2.set_y(90)
+    oval2.draw()
