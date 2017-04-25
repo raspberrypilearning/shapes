@@ -20,4 +20,13 @@ rect.draw()
 oval = Oval()
 oval.draw()
 
+# Oval with setters
+oval2 = Oval()
+oval2.set_height(200)
+oval2.set_width(100)
+oval2.set_color("fuchsia")
+oval2.set_x(30)
+oval2.set_y(90)
+oval2.draw()
+
 ```
