@@ -1,35 +1,52 @@
-from tkinter import Tk, Canvas, BOTH
-from random import randint, choice
+# This code requires Python 3 and tkinter (which is usually installed by default)
+# This code will NOT work on trinket.io as the tkinter module is not supported
+# Raspberry Pi Foundation 2017
+# CC-BY-SA 4.0
+
+try:
+    from tkinter import Tk, Canvas, BOTH
+except ImportError:
+    print("tkinter did not import successfully - check you are running Python 3 and that tkinter is available.")
+    exit(1)
+
+import random
 
 class Paper(Tk):
 
     def __init__(self, width=600, height=600):
+
+        # Call the constructor from the superclass (tkinter's Tk)
         try:
             super().__init__()
-        except:
-            print("Could not instantiate Paper")
-            
+        except ValueError:
+            print("Error: could not instantiate Paper object")
+
+        # Set some attributes
         self.title( "Drawing shapes" )
         self.geometry(str(width)+"x"+str(height))
         self.paper_width = width
         self.paper_height = height
     
-        # Create a tkinter canvas object
+        # Create a tkinter canvas object to draw on
         self.canvas = Canvas(self)
         self.canvas.pack(fill=BOTH, expand=1)
 
 
 class Shape():
 
-    # Static variable removing the need to pass a Paper object
+    # Static class variable removing the need to pass in a Paper object
+    # to draw the shapes on
     paper = Paper()
 
+    # Constructor for Shape
     def __init__(self, width=50, height=50, x=None, y=None, color="black"):
+
+        # Set some attributes
         self.height = height
         self.width = width
         self.color = color
-        #self.paper = paper
-        # Put it in the centre if no coords were given
+     
+        # Put the shape in the centre if no xy coords were given
         if x is None:
             self.x = (self.paper.paper_width/2) - (self.width/2)
         else:
@@ -39,7 +56,8 @@ class Shape():
         else:
             self.y = y
 
-    # This is an internal method not meant to be used
+    # This is an internal method not meant to be called by users
+    # (It has a _ before the method name to show this)
     def _location(self):
         x1 = self.x
         y1 = self.y 
@@ -47,17 +65,18 @@ class Shape():
         y2 = self.y + self.height
         return [x1, y1, x2, y2]
         
-    # Randomly generate what it looks like
+    # Randomly generate what the shape looks like
     def randomise(self, width=20, height=200):
 
-        self.width = randint(width, height)
-        self.height = randint(width, height)
+        self.width = random.randint(width, height)
+        self.height = random.randint(width, height)
 
-        self.x = randint(0, self.paper.paper_width-self.width)
-        self.y = randint(0, self.paper.paper_height-self.height)
+        self.x = random.randint(0, self.paper.paper_width-self.width)
+        self.y = random.randint(0, self.paper.paper_height-self.height)
 
-        self.color = choice(["red", "yellow", "blue", "green", "gray", "white", "black", "cyan"])
+        self.color = random.choice(["red", "yellow", "blue", "green", "gray", "white", "black", "cyan", "pink", "purple"])
 
+    # Getters and setters for Shape attributes
     def set_width(self, width):
         self.width = width
 
@@ -73,9 +92,14 @@ class Shape():
     def set_color(self, color):
         self.color = color
 
+    def get_color(self):
+        return self.color
 
+
+# Rectangle class is a subclass of Shape
 class Rectangle(Shape):
 
+    # This is how to draw a rectangle
     def draw(self):
         x1, y1, x2, y2 = self._location()
 
@@ -94,14 +118,17 @@ class Oval(Shape):
 
 class Triangle(Shape):
 
+    # Every constructor parameter has a default setting
+    # e.g. color defaults to "black" but you can override this
     def __init__(self, x1=0, y1=0, x2=20, y2=0, x3=20, y3=20, color="black"):
 
         try:
             super().__init__(color=color)
-        except:
-            print("Could not instantiate Triangle")
+        except ValueError:
+            print("Error: could not instantiate Triangle")
 
         # Remove height and width attributes which make no sense for a triangle
+        # (triangles are drawn via 3 xy coordinates)
         del self.height
         del self.width
 
@@ -122,16 +149,19 @@ class Triangle(Shape):
         self.paper.canvas.create_polygon(x1, y1, x2, y2, x3, y3, fill=self.color)
 
     def randomise(self):
-        # Randomise all the points of the triangle
-        self.x = randint(0, self.paper.paper_width)
-        self.y = randint(0, self.paper.paper_height)
-        self.x2 = randint(0, self.paper.paper_width)
-        self.y2 = randint(0, self.paper.paper_height)
-        self.x3 = randint(0, self.paper.paper_width)
-        self.y3 = randint(0, self.paper.paper_height)
+        # Randomly choose all the points of the triangle
+        self.x = random.randint(0, self.paper.paper_width)
+        self.y = random.randint(0, self.paper.paper_height)
+        self.x2 = random.randint(0, self.paper.paper_width)
+        self.y2 = random.randint(0, self.paper.paper_height)
+        self.x3 = random.randint(0, self.paper.paper_width)
+        self.y3 = random.randint(0, self.paper.paper_height)
 
-        self.color = choice(["red", "yellow", "blue", "green", "gray", "white", "black", "cyan"])
+        # Randomly choose a colour of this triangle
+        self.color = random.choice(["red", "yellow", "blue", "green", "gray", "white", "black", "cyan", "pink", "purple"])
 
+    # Change the behaviour of set_width and set_height methods for a triangle
+    # because triangles are not drawn in the same way
     def set_width(self, width):
         print("Width is not defined for Triangle objects")
 
@@ -139,8 +169,8 @@ class Triangle(Shape):
         print("Height is not defined for Triangle objects")
         
 
-
-# If you run this file it will auto do this demo script
+# This if statement means
+# "if you run this file (rather than importing it), run this demo script"
 if __name__ == "__main__":
 
     # Random size and location triangle
