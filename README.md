@@ -9,7 +9,7 @@ from shapes import Triangle, Rectangle, Oval
 
 # Random size and location triangle
 tri = Triangle()
-tri.randomise()
+tri.randomize()
 tri.draw()
 
 # Specific size and location rectangle
