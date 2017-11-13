@@ -29,7 +29,7 @@ class Paper(Tk):
         self.geometry(str(width)+"x"+str(height))
         self.paper_width = width
         self.paper_height = height
-    
+
         # Create a tkinter canvas object to draw on
         self.canvas = Canvas(self)
         self.canvas.pack(fill=BOTH, expand=1)
@@ -52,7 +52,7 @@ class Shape():
         self.height = height
         self.width = width
         self.color = color
-     
+
         # Put the shape in the centre if no xy coords were given
         if x is None:
             self.x = (self.paper.paper_width/2) - (self.width/2)
@@ -66,25 +66,27 @@ class Shape():
     # This is an internal method not meant to be called by users
     # (It has a _ before the method name to show this)
     def _location(self):
-        """Internal method used by the class to get the location 
+        """Internal method used by the class to get the location
         of the shape. This shouldn't be called by users, hence why its
         name begins with an underscore.
         """
-        
+
         x1 = self.x
-        y1 = self.y 
+        y1 = self.y
         x2 = self.x + self.width
         y2 = self.y + self.height
         return [x1, y1, x2, y2]
-        
-    # Randomly generate what the shape looks like
-    def randomise(self, width=20, height=200):
 
-        """Randomly generates width, height, position and colour for a shape
+    # Randomly generate what the shape looks like
+    def randomize(self, smallest=20, largest=200):
+
+        """Randomly generates width, height, position and colour for a shape. You can specify
+        the smallest and largest random size that will be generated. If not specified, the
+        generated shape will default to a random size between 20 and 200.
         """
 
-        self.width = random.randint(width, height)
-        self.height = random.randint(width, height)
+        self.width = random.randint(smallest, largest)
+        self.height = random.randint(smallest, largest)
 
         self.x = random.randint(0, self.paper.paper_width-self.width)
         self.y = random.randint(0, self.paper.paper_height-self.height)
@@ -94,32 +96,32 @@ class Shape():
     # Getters and setters for Shape attributes
     def set_width(self, width):
         """Sets the width of the shape"""
-        
+
         self.width = width
 
     def set_height(self,height):
         """Sets the height of the shape"""
-        
+
         self.height = height
 
     def set_x(self, x):
         """Sets the x position of the shape"""
-        
+
         self.x = x
 
     def set_y(self, y):
         """Sets the y position of the shape"""
-        
+
         self.y = y
 
     def set_color(self, color):
         """Sets the colour of the shape"""
-        
+
         self.color = color
 
     def get_color(self):
         """Returns the colour of the shape"""
-        
+
         return self.color
 
 
@@ -131,7 +133,7 @@ class Rectangle(Shape):
 
         """Draws a rectangle on the canvas. The properties of the rectangle
         can be set using the getter and setter methods in Shape"""
-        
+
         x1, y1, x2, y2 = self._location()
 
         # Draw the rectangle
@@ -144,7 +146,7 @@ class Oval(Shape):
 
         """Draws an oval on the canvas. The properties of the oval
         can be set using the getter and setter methods in Shape"""
-        
+
         x1, y1, x2, y2 = self._location()
 
         # Draw the oval
@@ -180,27 +182,27 @@ class Triangle(Shape):
 
     def _location(self):
 
-        """Internal method used by the class to get the location 
+        """Internal method used by the class to get the location
         of the triangle. This shouldn't be called by users, hence why its
         name begins with an underscore.
         """
-        
+
         return [self.x, self.y, self.x2, self.y2, self.x3, self.y3]
 
     def draw(self):
 
         """Draws a triangle on the canvas. The properties of the triangle
         can be set using the getter and setter methods in Shape"""
-        
+
         x1, y1, x2, y2, x3, y3 = self._location()
         # Draw a triangle
         self.paper.canvas.create_polygon(x1, y1, x2, y2, x3, y3, fill=self.color)
 
-    def randomise(self):
+    def randomize(self):
 
         """Randomly chooses the location of all 3 triangle points as well
         as the colour of the triangle"""
-        
+
         # Randomly choose all the points of the triangle
         self.x = random.randint(0, self.paper.paper_width)
         self.y = random.randint(0, self.paper.paper_height)
@@ -216,14 +218,14 @@ class Triangle(Shape):
     # because triangles are not drawn in the same way
     def set_width(self, width):
         """Overrides the setter method for width"""
-        
+
         print("Width is not defined for Triangle objects")
 
     def set_height(self, height):
         """Overrides the setter method for height"""
-        
+
         print("Height is not defined for Triangle objects")
-        
+
 
 # This if statement means
 # "if you run this file (rather than importing it), run this demo script"
@@ -231,7 +233,7 @@ if __name__ == "__main__":
 
     # Random size and location triangle
     tri = Triangle()
-    tri.randomise()
+    tri.randomize()
     tri.draw()
 
     # Specific size and location rectangle
