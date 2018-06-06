@@ -4,36 +4,47 @@
 # CC-BY-SA 4.0
 
 try:
-    from tkinter import Tk, Canvas, BOTH
+    from tkinter import Tk, Canvas, BOTH    
 except ImportError:
     print("tkinter did not import successfully - check you are running Python 3 and that tkinter is available.")
     exit(1)
 
+try:
+    tk = Tk()
+except ValueError:
+    print("Error: could not instantiate Paper object")
+    exit(1)
+
 import random
 
-class Paper(Tk):
+class Paper():
 
     def __init__(self, width=600, height=600):
 
         """Create a Paper object which allows shapes to be drawn onto it.
         """
-
         # Call the constructor from the superclass (tkinter's Tk)
-        try:
-            super().__init__()
-        except ValueError:
-            print("Error: could not instantiate Paper object")
 
         # Set some attributes
-        self.title( "Drawing shapes" )
-        self.geometry(str(width)+"x"+str(height))
-        self.paper_width = width
-        self.paper_height = height
+        tk.title( "Drawing shapes" )
+        tk.geometry(str(width)+"x"+str(height))
+        tk.paper_width = width
+        tk.paper_height = height
 
         # Create a tkinter canvas object to draw on
-        self.canvas = Canvas(self)
-        self.canvas.pack(fill=BOTH, expand=1)
+        tk.canvas = Canvas(tk)
+        tk.canvas.pack(fill=BOTH, expand=1)
 
+    # return the instance of tk 
+    def __get__(self, instance, owner):
+        return tk
+
+    @staticmethod
+    def display():
+        """
+        Displays the paper object
+        """
+        tk.mainloop()
 
 class Shape():
 
@@ -252,3 +263,5 @@ if __name__ == "__main__":
     oval2.set_x(30)
     oval2.set_y(90)
     oval2.draw()
+
+    Paper.display()
