@@ -9,6 +9,7 @@ except ImportError:
     print("tkinter did not import successfully - check you are running Python 3 and that tkinter is available.")
     exit(1)
 
+# create the tkinter object which will used in the Paper class.
 try:
     tk = Tk()
 except ValueError:
@@ -39,6 +40,7 @@ class Paper():
     def __get__(self, instance, owner):
         return tk
 
+    # allows Paper.display() to be called triggering the tk mainloop
     @staticmethod
     def display():
         """
